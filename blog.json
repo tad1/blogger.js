@@ -1,0 +1,12 @@
+{
+  "title" : "RTS Game",
+  "name" : "RTS Game DevLog",
+  "info": "",
+  "style": "css/blog.css",
+  "content": "post.json",
+  "editor_template": "editor.html",
+  "settings": {
+    "one_post": true,
+    "comments": false
+  }
+}
