@@ -391,11 +391,15 @@
 
         CallbackPublishPost: function(postJSON) {
 
+        //Check if there is any editor instance
           if(global.document.getElementsByClassName('editor').length == 0){
             console.log("Publishing Post Error: There isn't any active editor instance.");
+            return;
           }
           postJSON = JSON.parse(postJSON);
-          postJSON = [] || postJSON;
+          if(Array.isArray(postJSON) != true){
+            postJSON = [];
+          }
           var post = {};
           var sectionNames = [];
           var content = [];
@@ -409,6 +413,7 @@
           var yyyy = today.getFullYear();
           post.date = dd + '-' + mm + '-' + yyyy;
 
+          //Get post data
           post.title = global.document.getElementsByClassName("title")[0].innerHTML;
           for(let i = 0; i < numberOfSections; i++){
               sectionNames.push(global.document.getElementsByClassName('sectionName')[i].innerHTML);
@@ -417,7 +422,8 @@
           post.subTitle = sectionNames;
           post.content = content;
 
-          postJSON.push(post);
+          //Save to JSON and send
+          postJSON.unshift(post);
           postJSON = JSON.stringify(postJSON);
           this.SendData("savePost.php", postJSON, this.ReloadBlog);
         },
@@ -570,7 +576,7 @@
                         callback(myData);
                     }
                 };
-            xmlhttp.open("GET", url, true);
+            xmlhttp.open("GET", url + ((/\?/).test(url) ? "&" : "?") + (new Date()).getTime(), true);
             xmlhttp.send();
         },
 
